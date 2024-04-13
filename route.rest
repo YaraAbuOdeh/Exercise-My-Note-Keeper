@@ -1,0 +1,27 @@
+###
+GET  http://localhost:3000/notes/
+
+
+###
+POST http://localhost:3000/notes/
+Content-Type: application/json
+
+{
+    "title":"bla bla bla",
+    "Content":"hi "
+}
+
+###
+DELETE http://localhost:3000/notes/661804b6069fd3b5937b8943
+
+
+###
+PATCH  http://localhost:3000/notes/661a9119be7ec489a2fc6084
+Content-Type: application/json
+
+{
+    "title":"new hi"
+}
+###
+GET http://localhost:3000/notes/search?query=hello how are you
+
