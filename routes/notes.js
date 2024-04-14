@@ -1,73 +1,24 @@
+// routes/notes.js
+
 const express = require('express');
 const router = express.Router();
+const { getAllNotes, createNote, updateNote, deleteNote, searchNotes } = require('../controllers/note');
 const Note = require('../models/notes');
 
 // Getting all
-router.get('/', async (req, res) => {
-    try {
-        const getAllNotes = await Note.find();
-        res.json(getAllNotes);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+router.get('/', getAllNotes);
 
 // Creating one
-router.post('/', async (req, res) => {
-    const addNewNote = new Note({
-        title: req.body.title,
-        Content: req.body.Content
-    });
-    try {
-        const saveNewNote = await addNewNote.save();
-        res.status(201).json(saveNewNote);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+router.post('/', createNote);
 
 // Update one
-router.patch('/:id', getNote, async (req, res) => {
-    if (req.body.title != null) {
-        res.note.title = req.body.title;
-    }
-    if (req.body.Content != null) {
-        res.note.Content = req.body.Content;
-    }
-    try {
-        const updateNote = await res.note.save();
-        res.json(updateNote);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+router.patch('/:id', getNote, updateNote);
 
 // Delete one
-router.delete('/:id', getNote, async (req, res) => {
-    try {
-        console.log("hi hi "+res.note)
-        await res.note.deleteOne()
-        res.json({ message: 'Note deleted successfully' });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+router.delete('/:id', getNote, deleteNote);
 
 /// Search notes by title or content
-router.get('/search', async (req, res) => {
-    const query = req.query.query;
-    try {
-        const searchResult = await Note.find({
-            $or: [
-                { title: { $regex: query, $options: 'i' } },
-                { Content: { $regex: query, $options: 'i' } }
-            ]
-        });
-        res.json(searchResult);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+router.get('/search', searchNotes);
 
 async function getNote(req, res, next) {
     let note;

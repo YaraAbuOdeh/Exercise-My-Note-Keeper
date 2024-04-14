@@ -5,11 +5,11 @@ const notesSchema =new mongoose.Schema({
         type:String,
         required:true
     },
-    Content:{
+    content:{
         type:String,
         required:true
     },
-    noteDate:{
+    creation_at:{
         type:Date,
         required:true,
         default:Date.now
