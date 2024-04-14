@@ -1,8 +1,6 @@
-// controllers/note.js
 
 const Note = require('../models/notes');
 
-// Controller for getting all notes
 async function getAllNotes(req, res) {
     try {
         const allNotes = await Note.find();
@@ -12,7 +10,6 @@ async function getAllNotes(req, res) {
     }
 }
 
-// Controller for creating a new note
 async function createNote(req, res) {
     const { title, content } = req.body;
     const newNote = new Note({
@@ -27,7 +24,6 @@ async function createNote(req, res) {
     }
 }
 
-// Controller for updating a note
 async function updateNote(req, res) {
     const { title, content } = req.body;
     if (title != null) {
@@ -44,7 +40,6 @@ async function updateNote(req, res) {
     }
 }
 
-// Controller for deleting a note
 async function deleteNote(req, res) {
     try {
         await res.note.deleteOne();
@@ -54,7 +49,6 @@ async function deleteNote(req, res) {
     }
 }
 
-// Controller for searching notes by title or content
 async function searchNotes(req, res) {
     const query = req.query.query;
     try {
@@ -70,10 +64,25 @@ async function searchNotes(req, res) {
     }
 }
 
+async function getNote(req, res, next) {
+    let note;
+    try {
+        note = await Note.findById(req.params.id);
+        if (note == null) {
+            return res.status(404).json({ message: 'Cannot find note' });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+    res.note = note;
+    next();
+}
+
 module.exports = {
     getAllNotes,
     createNote,
     updateNote,
     deleteNote,
-    searchNotes
+    searchNotes,
+    getNote
 };

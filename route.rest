@@ -7,19 +7,19 @@ POST http://localhost:3000/notes/
 Content-Type: application/json
 
 {
-    "title":"new note 3",
+    "title":"new note 4",
     "content":"add new note."
 }
 
 ###
-DELETE http://localhost:3000/notes/661bce32c3ab93c81288e017
+DELETE http://localhost:3000/notes/661bcf2c25c537881719326b
 
 ###
-PATCH  http://localhost:3000/notes/661be3fbc10f48b5d3f4e405
+PATCH  http://localhost:3000/notes/661bd067bfcd439d1f9bf6e9
 Content-Type: application/json
 
 {
-    "title":"updated the note"
+    "title": "update the task"
 }
 ###
 GET http://localhost:3000/notes/search?query=new note 2
